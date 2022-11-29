@@ -21,9 +21,9 @@ def train(args, model, tokenizer, logger):
     mb = master_bar(range(int(args.num_train_epochs)))
     best_f1 = 0
     
-    for cur_epo in range(args.num_train_epochs * args.num_datas):
+    for cur_epo in range(args.num_train_epochs):
         # 전체 데이터를 args.num_datas 수에 맞게 분할 및 학습 데이터 생성
-        train_dataset = load_examples(args, tokenizer, evaluate=False, output_examples=False, num=cur_epo%args.num_datas)
+        train_dataset = load_examples(args, tokenizer, evaluate=False, output_examples=False)
         
         """ Train the model """
         train_sampler = RandomSampler(train_dataset)
