@@ -4,25 +4,24 @@ import os
 
 import torch
 from attrdict import AttrDict
-from model import ElectraForQuestionAnswering
+from model import RobertaForQuestionAnswering
 from utils import init_logger, set_seed
-from transformers import ElectraTokenizer, ElectraConfig
+from transformers import RobertaTokenizer, RobertaConfig
 
 from main_functions import train, evaluate
-from nsml import DATASET_PATH
 from torch import nn
 
 def create_model(args):
     # 모델 초기 가중치를 init_weight로 지정하거나 파라미터로 입력한 checkpoint로 지정
-    config = ElectraConfig.from_pretrained(
+    config = RobertaConfig.from_pretrained(
         args.model_name_or_path if args.from_init_weight else args.output_dir
     )
     # tokenizer는 pre-trained된 것을 불러온다기보다 저장된 모델에 추가 vocab 등을 불러오는 과정
-    tokenizer = ElectraTokenizer.from_pretrained(
+    tokenizer = RobertaTokenizer.from_pretrained(
         args.model_name_or_path if args.from_init_weight else args.output_dir,
         do_lower_case=args.do_lower_case,
     )
-    model = ElectraForQuestionAnswering.from_pretrained(
+    model = RobertaForQuestionAnswering.from_pretrained(
         args.model_name_or_path if args.from_init_weight else args.output_dir,
         config=config,
         from_tf= False
@@ -59,13 +58,11 @@ if __name__ == '__main__':
 
     file_flag = 'baseline'
     # Directory
-    # cli_parser.add_argument("--model_name_or_path", type=str, default="google/electra-base-discriminator")
-    cli_parser.add_argument("--model_name_or_path", type=str, default="monologg/koelectra-base-v2-discriminator")
+    cli_parser.add_argument("--model_name_or_path", type=str, default="roberta-large")
     cli_parser.add_argument("--output_dir", type=str, default="./models")
-    # cli_parser.add_argument("--train_file_path", type=str, default="../../data/refine_test.json")
-    # cli_parser.add_argument("--dev_file_path", type=str, default="../../data/refine_sample.json")
-    cli_parser.add_argument("--train_file_path", type=str, default=os.path.join(DATASET_PATH, 'train',"refine_train.json"))
-    cli_parser.add_argument("--dev_file_path", type=str, default=os.path.join(DATASET_PATH, 'train',"refine_test.json"))
+    
+    cli_parser.add_argument("--train_file_path", type=str, default='./data/refine_train.json')
+    cli_parser.add_argument("--dev_file_path", type=str, default="./data/refine_test.json")
 
     # Model Hyper Parameter
     cli_parser.add_argument("--max_seq_length", type=int, default=512)
@@ -76,10 +73,9 @@ if __name__ == '__main__':
 
     # Training Parameter
     cli_parser.add_argument("--learning_rate", type=float, default=5e-5)
-    cli_parser.add_argument("--train_batch_size", type=int, default=16)
-    cli_parser.add_argument("--eval_batch_size", type=int, default=16)
+    cli_parser.add_argument("--train_batch_size", type=int, default=8)
+    cli_parser.add_argument("--eval_batch_size", type=int, default=8)
     cli_parser.add_argument("--num_train_epochs", type=int, default=20)
-    cli_parser.add_argument("--num_datas", type=int, default=16)
 
     cli_parser.add_argument("--threads", type=int, default=12)
     cli_parser.add_argument("--save_steps", type=int, default=500)
@@ -89,7 +85,7 @@ if __name__ == '__main__':
     cli_parser.add_argument("--result_file", type=str, default="./result_file")
     cli_parser.add_argument("--weight_decay", type=float, default=0.0)
     cli_parser.add_argument("--adam_epsilon", type=int, default=1e-10)
-    cli_parser.add_argument("--gradient_accumulation_steps", type=int, default=1)
+    cli_parser.add_argument("--gradient_accumulation_steps", type=int, default=8)
     cli_parser.add_argument("--warmup_steps", type=int, default=0)
     cli_parser.add_argument("--max_steps", type=int, default=-1)
     cli_parser.add_argument("--max_grad_norm", type=int, default=1.0)
