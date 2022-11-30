@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers.modeling_electra import ElectraModel, ElectraPreTrainedModel
+from transformers import RobertaModel
+from transformers.modeling_bert import BertModel
 
 class ATLoss(nn.Module):
     def __init__(self):
@@ -89,7 +90,7 @@ def _make_triu_mask(seq_len):
     return triu_mask
 
 
-class ElectraForQuestionAnswering(ElectraPreTrainedModel):
+class RobertaForQuestionAnswering(BertModel):
     def __init__(self, config):
         super(ElectraForQuestionAnswering, self).__init__(config)
         # 분류 해야할 라벨 개수 (start/end)
@@ -97,7 +98,7 @@ class ElectraForQuestionAnswering(ElectraPreTrainedModel):
         self.hidden_size = config.hidden_size
 
         # ELECTRA 모델 선언
-        self.electra = ElectraModel(config)
+        self.roberta = RobertaaModel(config)
 
         # bi-gru layer 선언
         self.bi_gru = nn.GRU(input_size=config.hidden_size, hidden_size=int(config.hidden_size / 2),
@@ -157,7 +158,7 @@ class ElectraForQuestionAnswering(ElectraPreTrainedModel):
             end_position=None,
             flag=None
     ):
-        outputs = self.electra(
+        outputs = self.roberta(
             input_ids,
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
