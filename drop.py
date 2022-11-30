@@ -10,7 +10,7 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
  
 
-# From here through _normalize_answer was originally copied from:
+# From here through _normalize_answer was originally copied from: 
 # https://worksheets.codalab.org/rest/bundles/0x6b567e1cf2e041ec80d7098f031c5c9e/contents/blob/
 # Then cleaned up and modified a bit.
 def _remove_articles(text: str) -> str:
