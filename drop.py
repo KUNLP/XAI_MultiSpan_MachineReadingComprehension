@@ -17,10 +17,8 @@ def _remove_articles(text: str) -> str:
     regex = re.compile(r"\b(a|an|the)\b", re.UNICODE)
     return re.sub(regex, " ", text)
 
-
 def _white_space_fix(text: str) -> str:
     return " ".join(text.split())
-
 
 EXCLUDE = set(string.punctuation)
 
