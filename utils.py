@@ -2,7 +2,7 @@ import logging
 import random
 
 import numpy as np
-import torch
+import torch 
 
 from processor import (
     SquadV1Processor,
