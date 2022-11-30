@@ -11,7 +11,7 @@ from utils import load_examples, set_seed, to_list, get_best_span, span_freeze, 
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from transformers import ( 
     AdamW,
-    get_linear_schedule_with_warmup
+    get_linear_schedule_with_warmup 
 )
 
 from multi_measure import evaluate_prediction_file
