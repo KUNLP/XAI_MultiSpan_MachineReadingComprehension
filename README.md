@@ -8,6 +8,7 @@
 * AttrDict
 
 # Model Architecture
+![Model](https://user-images.githubusercontent.com/80243108/204685002-ec31815d-ddb6-4336-b0a1-353ea264db7a.jpg)
 
 # Data
 * Quoref
