@@ -8,7 +8,7 @@ from processor import (
     SquadV1Processor,
     SquadV2Processor,
     squad_convert_examples_to_features 
-) 
+)
 
 
 def init_logger():
