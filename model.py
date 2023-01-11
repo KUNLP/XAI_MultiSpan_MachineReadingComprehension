@@ -177,8 +177,6 @@ class RobertaForQuestionAnswering(BertModel):
         th_logits = self.th_outputs(cls_output).squeeze(-1)
         # th_logits : [batch]
 
-        self.bi_gru.flatten_parameters()
-
         tok_gru_output, _ = self.bi_gru(sequence_output)
         # tok_gru_output : [batch, seq_len, hidden_size]
 
